@@ -148,11 +148,11 @@ async def get_json(client, url):
     r.raise_for_status()
     return r.json()
 
-@app.get("/health")
+@app.get("/api/health")
 async def health():
     return {"ok": True}
 
-@app.post("/migros/category")
+@app.post("/api/migros/category")
 async def migros_category(req: CategoryRequest):
     try:
         slug = category_slug(req.url)

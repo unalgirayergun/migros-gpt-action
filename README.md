@@ -5,8 +5,8 @@ Custom GPT daha sonra bu JSON'u Excel'e çevirebilir.
 
 ## Endpointler
 
-- `GET /health`
-- `POST /migros/category`
+- `GET /api/health`
+- `POST /api/migros/category`
 
 Örnek body:
 
@@ -24,7 +24,7 @@ Custom GPT daha sonra bu JSON'u Excel'e çevirebilir.
 4. Framework Preset: Other.
 5. Deploy.
 6. Deploy bittikten sonra:
-   `https://PROJEN.vercel.app/health`
+   `https://PROJEN.vercel.app/api/health`
    adresini aç.
 7. `{"ok":true}` görürsen backend çalışıyor.
 
