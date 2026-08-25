@@ -1,0 +1,74 @@
+openapi: 3.1.0
+info:
+  title: Migros Category Excel Exporter
+  version: 2.0.0
+  description: Validates a Migros category export and returns a downloadable Excel URL.
+
+servers:
+  - url: https://migros-gpt-action.vercel.app
+
+paths:
+  /api/migros/category:
+    post:
+      operationId: prepareMigrosCategoryExport
+      summary: Prepare a complete Migros category Excel export
+      description: >
+        Checks all pages of a Migros category, returns compact extraction statistics,
+        and provides an Excel download URL when every page was retrieved successfully.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: Full Migros category page URL.
+                  example: https://www.migros.com.tr/dondurma-c-41b
+              required:
+                - url
+      responses:
+        "200":
+          description: Export validation result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  source_category_url:
+                    type: string
+                  category_slug:
+                    type: string
+                  category_id:
+                    type: string
+                  page_count_reported:
+                    type: integer
+                  hit_count_reported:
+                    type: integer
+                  rows_extracted:
+                    type: integer
+                  unique_products:
+                    type: integer
+                  page_errors:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: true
+                  export_ready:
+                    type: boolean
+                  download_url:
+                    type:
+                      - string
+                      - "null"
+                required:
+                  - page_count_reported
+                  - rows_extracted
+                  - unique_products
+                  - page_errors
+                  - export_ready
+                  - download_url
+        "400":
+          description: Invalid category URL
+        "502":
+          description: Migros data could not be retrieved
